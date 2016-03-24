@@ -12,6 +12,7 @@ var list = function() {
 
         var l = {
             length: 0,
+            index: 0,
             currentNode: null,
             head: new Node(null),
             add: function(e) {
@@ -29,8 +30,28 @@ var list = function() {
                     l.length++;
                 }
             },
-        };
 
+            iterator: function() {
+                if (l.index > l.length) {
+                    return null
+                }
+
+                if (l.index === 0){
+                    l.index ++
+                    return l.head.data
+                }
+
+                else {
+                    while(l.index + 1 > 0){
+                        l.head = l.head.next;
+                    l.index ++ 
+                    return l.head.data
+                    }  
+                } 
+                }
+            
+        };
+       
         var F = function () {
         };
         var f = new F();
@@ -70,6 +91,8 @@ var list = function() {
             }
         }
 
+        f.nextelem = function() {  return l.iterator()}
+
         return f;
     }();
     return list;
@@ -78,7 +101,7 @@ var list = function() {
 var l1 = new list();
 l1.concat('a')
 l1.cons('b')
-document.writeln("l1: " + l1.head+ "<BR>");
+document.writeln("l1: " + l1.first() + "<BR>");
 document.writeln("l1: " + l1.length() + "<BR>");
 
 var l2 = new list();
@@ -114,51 +137,13 @@ for(var i = 1; i < l4.length(); i++) {
     document.writeln(", " + h.data);
 }
 
+var l5 = new list();
+l5.cons('1')
+l5.cons('2')
+l5.cons('3')
 
-function findnext(list) {
-    var index = 0;
-    var length = list.length();
+document.writeln("<BR>l5 0: " + l5.nextelem())
+document.writeln("<BR>l5 1: " + l5.nextelem())
+document.writeln("<BR>l5 2: " + l5.nextelem())
+document.writeln("<BR>l5 3: " + l5.nextelem())
 
-    var iterator = {
-        hasNext: function() {
-            return index < length
-        },
-
-        next: function(){
-            console.log("hello")
-
-            // check to see if there is a next element
-            if (!this.hasNext()){
-                return null; 
-            }
-            // get the next element
-            if (index === 0) {
-                index ++ 
-                return list.car();
-            }
-
-            else {
-                list.car();
-                while (index + 1 > 0 ) {
-                    value = list.cdr().car();
-                index ++
-                return document.writeln(value)
-                
-                }
-            }
-        }
-   
-
-
-    }
-
-    var F = function () {
-
-    };
-    
-    var f = new F();
-
-    f.nextelem = function() {return iterator.next};
-}
-
-l3.nextelem()
